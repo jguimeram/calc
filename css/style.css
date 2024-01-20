@@ -50,3 +50,18 @@ a:hover,
 a:active {
     text-decoration: none;
 }
+
+.calc {
+    margin: auto;
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.button {
+    border: 1px solid red;
+    text-align: center;
+    align-self: center;
+    cursor: pointer;
+}
