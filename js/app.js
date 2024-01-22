@@ -1,60 +1,86 @@
 const calc = document.querySelector('.calc')
 let token = []
-let left = 0
 let right
-let res
+let left = 0
 let operand = ""
+
+function joinNumbers(array) {
+    return array.map(Number).reduce((prev, curr) => prev * 10 + curr)
+}
+
+function add(left, right) {
+    return left + right
+}
+function sub(left, right) {
+    return left - right
+}
+function mult(left, right) {
+    return left * right
+}
+function div(left, right) {
+    return left / right
+}
+
+function calculate(operand) {
+    switch (operand) {
+        case '+':
+            return add(left, right)
+        case '-':
+            return sub(left, right)
+        case '*':
+            return mult(left, right)
+        case '/':
+            return div(left, right)
+        default:
+            break;
+    }
+}
+
+
 calc.addEventListener('click', (e) => {
 
     let value = e.target.textContent
     if (e.target.classList.contains('button')) {
 
+
         if (isNaN(value)) {
-            /* operator */
-            /* 1: join numbers => 4, 5, 3 => 453 */
-            if (res == undefined) res = token.map(Number).reduce((prev, curr) => prev * 10 + curr)
-            else right = token.map(Number).reduce((prev, curr) => prev * 10 + curr)
-            console.log(`value: ${value}`);
+
+            /* if it's not a number: */
+
+            if (left === 0) {
+                left = joinNumbers(token)
+                console.log(left);
+            }
+
+            else {
+                right = joinNumbers(token)
+                console.log(right);
+            }
+
+
+            if (value === operand) {
+                left = calculate(operand)
+            }
 
             if (value != '=') operand = value
+
             else {
-                switch (operand) {
-                    case '+':
-                        console.log(res + right)
-                        break;
-                    case '-':
-                        console.log(res - right)
-                        break;
-                    case '*':
-                        console.log(res * right)
-                        break;
-                    case '/':
-                        console.log(res / right)
-                        break;
-                    default:
-                        console.log("urmom")
-                        break;
-                }
+                let res = calculate(operand)
+                console.log(res);
             }
 
             token = []
         } else {
-            /* add numbers to array if value is not an operand */
+
+
+            /* if is a number add to array*/
             value = parseInt(value)
-            token.push(e.target.textContent)
-            //console.log(token);
+            token.push(e.target.textContent);
         }
 
 
     }
 })
-
-/* 
-    console.log(`res: ${res}`);
-    console.log(`right: ${right}`);
-    console.log(`operand: ${operand}`);
-    
-*/
 
 
 
