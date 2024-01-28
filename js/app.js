@@ -43,28 +43,15 @@ function calculate(operand) {
 function tokenize(values) {
     let num = 0;
     let operand = "";
-    for (let value of values) {
+    values.forEach(function (value, key, values) {
         if ((/\d+/).test(value)) {
             num = (num * 10 + parseInt(value));
         }
         else if (/[+\-*/]/.test(value)) {
-            operand = value;
-            if (left === 0)
-                left = num;
-            //multiple operations before = (2+3+3+2)    
-            else {
-                right = num;
-                left = calculate(operand);
-            }
-            num = 0;
-            log(`left: ${left}`);
         }
         else if (/[=]/.test(value)) {
-            right = num;
-            log(`right: ${right}`);
-            log(`res: ${calculate(operand)}`);
         }
-    }
+    });
 }
 const stack = [];
 calc.addEventListener('click', (e) => {

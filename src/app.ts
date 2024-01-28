@@ -52,8 +52,7 @@ function tokenize(values: Array<string>): void {
     let num: number = 0
     let operand: string = ""
 
-    for (let value of values) {
-
+    values.forEach(function(value, key, values){
         
         if ((/\d+/).test(value)) {
 
@@ -61,26 +60,11 @@ function tokenize(values: Array<string>): void {
 
         } else if (/[+\-*/]/.test(value)) {
 
-            operand = value
+           
+        } else if (/[=]/.test(value)) {    
 
-            if (left === 0) left = num
-              
-            //multiple operations before = (2+3+3+2)    
-            else {
-                right = num
-                left = calculate(operand)
-            }
-                
-            num = 0
-            
-            log(`left: ${left}`)
-        } 
-        else if (/[=]/.test(value)) {    
-            right = num 
-            log(`right: ${right}`)
-            log(`res: ${calculate(operand)}`)
         }
-    }
+    })
      
 }
 
