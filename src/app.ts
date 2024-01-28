@@ -6,11 +6,8 @@ const log = function (param:any) {
 let right: number = 0
 let left: number = 0
 let operand:string = ""
- let token:string = ""
+let token: string = ""
 
-function joinnumbers(array:Array<number>) {
-    return array.map(Number).reduce((prev, curr) => prev * 10 + curr)
-}
 
 function add(left:number, right:number):number {
     return left + right
@@ -42,6 +39,7 @@ function calculate(operand: string):number {
             res = div(left, right)
             break;
         default:
+            log("urmom")
             break;
     }
 
@@ -49,23 +47,43 @@ function calculate(operand: string):number {
 
 }
 
+function tokenize(values: Array<string>): void {
 
+    let num: number = 0
+    let operand: string = ""
 
+    for (let value of values) {
 
+        log(`value: ${value}`)
+        
+
+        if ((/\d+/).test(value)){
+            num = (num * 10 + parseInt(value))  
+        } else if (/[+\-*/]/.test(value)) {
+             left = num
+             num = 0
+             operand = value
+             log(`left: ${left}`)
+        } 
+        else if (/[=]/.test(value)) {    
+            right = num 
+            log(`right: ${right}`)
+            log(calculate(operand))
+        }
+    }
+     
+}
+
+const stack:Array<string> = []
 
 calc.addEventListener('click', (e) => {
 
     const target = e.target as HTMLElement
     let value:string = target.textContent as string
     if (target.classList.contains('button')) {
-
-        if ((/\d+/).test(value)) {
-        console.log('is a number')    
-        } else if (/[+\-*/]/.test(value)){
-            console.log('is an operand') 
-        } else if (/[=]/.test(value)) {
-            console.log('equal operand')
-        }
+        stack.push(value)
+        if (value === "=") tokenize(stack)
+        
     }
 })
 

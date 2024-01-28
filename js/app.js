@@ -7,9 +7,6 @@ let right = 0;
 let left = 0;
 let operand = "";
 let token = "";
-function joinnumbers(array) {
-    return array.map(Number).reduce((prev, curr) => prev * 10 + curr);
-}
 function add(left, right) {
     return left + right;
 }
@@ -38,22 +35,39 @@ function calculate(operand) {
             res = div(left, right);
             break;
         default:
+            log("urmom");
             break;
     }
     return res;
 }
+function tokenize(values) {
+    let num = 0;
+    let operand = "";
+    for (let value of values) {
+        log(`value: ${value}`);
+        if ((/\d+/).test(value)) {
+            num = (num * 10 + parseInt(value));
+        }
+        else if (/[+\-*/]/.test(value)) {
+            left = num;
+            num = 0;
+            operand = value;
+            log(`left: ${left}`);
+        }
+        else if (/[=]/.test(value)) {
+            right = num;
+            log(`right: ${right}`);
+            log(calculate(operand));
+        }
+    }
+}
+const stack = [];
 calc.addEventListener('click', (e) => {
     const target = e.target;
     let value = target.textContent;
     if (target.classList.contains('button')) {
-        if ((/\d+/).test(value)) {
-            console.log('is a number');
-        }
-        else if (/[+\-*/]/.test(value)) {
-            console.log('is an operand');
-        }
-        else if (/[=]/.test(value)) {
-            console.log('equal operand');
-        }
+        stack.push(value);
+        if (value === "=")
+            tokenize(stack);
     }
 });

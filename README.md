@@ -24,3 +24,14 @@ This is the hardest part of the project. You need to figure out how to store all
 17. Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble. Read the MDN documentation for event.preventDefault to help solve this problem.
 
 
+  if ((/\d+/).test(value)) {
+            console.log('is a number') 
+   
+        } else if (/[+\-*/]/.test(value)) {
+            console.log('is an operand') 
+            
+
+        } else if (/[=]/.test(value)) {
+            console.log('equal operand')
+
+        }
