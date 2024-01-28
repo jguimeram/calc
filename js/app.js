@@ -44,20 +44,25 @@ function tokenize(values) {
     let num = 0;
     let operand = "";
     for (let value of values) {
-        log(`value: ${value}`);
         if ((/\d+/).test(value)) {
             num = (num * 10 + parseInt(value));
         }
         else if (/[+\-*/]/.test(value)) {
-            left = num;
-            num = 0;
             operand = value;
+            if (left === 0)
+                left = num;
+            //multiple operations before = (2+3+3+2)    
+            else {
+                right = num;
+                left = calculate(operand);
+            }
+            num = 0;
             log(`left: ${left}`);
         }
         else if (/[=]/.test(value)) {
             right = num;
             log(`right: ${right}`);
-            log(calculate(operand));
+            log(`res: ${calculate(operand)}`);
         }
     }
 }
